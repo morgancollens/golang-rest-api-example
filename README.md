@@ -25,7 +25,7 @@ After running the above command, the API should now be listening at `http://loca
 ## Usage
 
 
-`GET /drivers` - Fetch a list of all drivers
+`GET /drivers` - Fetch a single driver by name
 
 ```shell
 curl --location 'localhost:8080/drivers'
@@ -54,6 +54,19 @@ curl --location 'localhost:8080/drivers'
     },
     ...
 ]
+```
+
+`GET /drivers/:driverName` - Fetch a list of all drivers
+
+```shell
+curl --location 'localhost:8080/drivers/Max%20Verstappen'
+
+# Example Response
+{
+    "name": "Max Verstappen",
+    "number": 1,
+    "team": "Red Bull Racing"
+}
 ```
 
 #

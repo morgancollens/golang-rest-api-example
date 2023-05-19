@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -36,22 +35,43 @@ func _readDriversFromFile() []Driver {
 	return drivers.Drivers
 }
 
-/**
-*	GET /drivers
-*	Returns a list of drivers participating in the 2023 Formula 1 Season
+/*
 *
-**/
+
+	GET /drivers
+	Returns a list of drivers participating in the 2023 Formula 1 Season
+
+*
+*/
 func getDrivers(c *gin.Context) {
-	fmt.Println("/drivers")
 	driverList := _readDriversFromFile()
 
 	c.IndentedJSON(http.StatusOK, driverList)
+}
+
+/*
+*
+
+	GET /drivers/:driverName
+	Returns a single driver participating in the 2023 Formula 1 Season,
+	when provided with the drivers name.
+
+*
+*/
+func getSingleDriver(c *gin.Context) {
+	driverList := _readDriversFromFile()
+	driverName, _ := c.Params.Get("driverName")
+
+	driver := findDriverByName(driverName, driverList)
+
+	c.IndentedJSON(http.StatusOK, driver)
 }
 
 func main() {
 	router := gin.Default()
 
 	router.GET("/drivers", getDrivers)
+	router.GET("/drivers/:driverName", getSingleDriver)
 
 	router.Run("localhost:8080")
 }
