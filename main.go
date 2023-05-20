@@ -4,35 +4,49 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Driver struct {
-	Name   string `json:"name"`
-	Number int    `json:"number"`
-	Team   string `json:"team"`
+	DriverID        string `json:"driverId"`
+	PermanentNumber string `json:"permanentNumber"`
+	Code            string `json:"code"`
+	URL             string `json:"url"`
+	GivenName       string `json:"givenName"`
+	FamilyName      string `json:"familyName"`
+	DateOfBirth     string `json:"dateOfBirth"`
+	Nationality     string `json:"nationality"`
 }
 
-type Drivers struct {
-	Drivers []Driver `json:"drivers"`
+type DriverTable struct {
+	Year    int      `json:"season"`
+	Drivers []Driver `json:"Drivers"`
 }
 
-func _readDriversFromFile() []Driver {
-	jsonFile, err := os.Open("data/drivers.json")
-	defer jsonFile.Close()
+type GetAllDriversBody struct {
+	DriverTable DriverTable `json:"DriverTable"`
+}
+
+type GetAllDriversResponse struct {
+	Body GetAllDriversBody `json:"MRData"`
+}
+
+var apiEndpoint string = "https://ergast.com/api/f1/2023"
+
+func _getAllDrivers() GetAllDriversResponse {
+	resp, err := http.Get(apiEndpoint + "/drivers.json")
 
 	if err != nil {
 		panic(err)
 	}
 
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := ioutil.ReadAll(resp.Body)
 
-	var drivers Drivers
-	json.Unmarshal(byteValue, &drivers)
+	var data GetAllDriversResponse
+	json.Unmarshal(byteValue, &data)
 
-	return drivers.Drivers
+	return data
 }
 
 /*
@@ -44,9 +58,9 @@ func _readDriversFromFile() []Driver {
 *
 */
 func getDrivers(c *gin.Context) {
-	driverList := _readDriversFromFile()
+	data := _getAllDrivers()
 
-	c.IndentedJSON(http.StatusOK, driverList)
+	c.IndentedJSON(http.StatusOK, data.Body.DriverTable.Drivers)
 }
 
 /*
@@ -59,10 +73,9 @@ func getDrivers(c *gin.Context) {
 *
 */
 func getSingleDriver(c *gin.Context) {
-	driverList := _readDriversFromFile()
+	driverList := _getAllDrivers()
 	driverName, _ := c.Params.Get("driverName")
-
-	driver := findDriverByName(driverName, driverList)
+	driver := findDriverByName(driverName, driverList.Body.DriverTable.Drivers)
 
 	c.IndentedJSON(http.StatusOK, driver)
 }

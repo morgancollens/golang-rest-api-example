@@ -2,7 +2,7 @@
 
 A simple RESTful API built in order to learn Golang.
 
-The API is designed to allow consumers to perform RESTful operations on resources related to the 2023 Formula 1 season.
+The API is designed to allow consumers to perform RESTful operations on resources related to the 2023 Formula 1 season, and is powered by [Ergast Developer API](https://ergast.com/mrd/)
 
 #
 ## How to Run
@@ -32,25 +32,45 @@ curl --location 'localhost:8080/drivers'
 
 # Example Response
 [
-    {
-        "name": "Lewis Hamilton",
-        "number": 44,
-        "team": "Mercedes AMG Petronas"
+     {
+        "driverId": "albon",
+        "permanentNumber": "23",
+        "code": "ALB",
+        "url": "http://en.wikipedia.org/wiki/Alexander_Albon",
+        "givenName": "Alexander",
+        "familyName": "Albon",
+        "dateOfBirth": "1996-03-23",
+        "nationality": "Thai"
     },
     {
-        "name": "George Russell",
-        "number": 63,
-        "team": "Mercedes AMG Petronas"
+        "driverId": "alonso",
+        "permanentNumber": "14",
+        "code": "ALO",
+        "url": "http://en.wikipedia.org/wiki/Fernando_Alonso",
+        "givenName": "Fernando",
+        "familyName": "Alonso",
+        "dateOfBirth": "1981-07-29",
+        "nationality": "Spanish"
     },
     {
-        "name": "Max Verstappen",
-        "number": 1,
-        "team": "Red Bull Racing"
+        "driverId": "bottas",
+        "permanentNumber": "77",
+        "code": "BOT",
+        "url": "http://en.wikipedia.org/wiki/Valtteri_Bottas",
+        "givenName": "Valtteri",
+        "familyName": "Bottas",
+        "dateOfBirth": "1989-08-28",
+        "nationality": "Finnish"
     },
     {
-        "name": "Sergio Perez",
-        "number": 11,
-        "team": "Red Bull Racing"
+        "driverId": "de_vries",
+        "permanentNumber": "21",
+        "code": "DEV",
+        "url": "http://en.wikipedia.org/wiki/Nyck_de_Vries",
+        "givenName": "Nyck",
+        "familyName": "de Vries",
+        "dateOfBirth": "1995-02-06",
+        "nationality": "Dutch"
     },
     ...
 ]
@@ -63,9 +83,14 @@ curl --location 'localhost:8080/drivers/Max%20Verstappen'
 
 # Example Response
 {
-    "name": "Max Verstappen",
-    "number": 1,
-    "team": "Red Bull Racing"
+    "driverId": "max_verstappen",
+    "permanentNumber": "33",
+    "code": "VER",
+    "url": "http://en.wikipedia.org/wiki/Max_Verstappen",
+    "givenName": "Max",
+    "familyName": "Verstappen",
+    "dateOfBirth": "1997-09-30",
+    "nationality": "Dutch"
 }
 ```
 

@@ -1,6 +1,8 @@
 package main
 
-import "reflect"
+import (
+	"reflect"
+)
 
 /*
 *
@@ -37,7 +39,7 @@ func find(slice interface{}, callback func(interface{}) bool) interface{} {
 func findDriverByName(name string, driverList []Driver) interface{} {
 	result := find(driverList, func(p interface{}) bool {
 		driver := p.(Driver)
-		return driver.Name == name
+		return (driver.GivenName + " " + driver.FamilyName) == name
 	})
 
 	if result != nil {
