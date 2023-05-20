@@ -17,7 +17,7 @@ go mod download
 ### Start the API
 
 ```shell
-go run main.go
+go run .
 ```
 
 After running the above command, the API should now be listening at `http://localhost:8080`.
