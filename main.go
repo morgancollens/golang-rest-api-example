@@ -32,7 +32,7 @@ type GetAllDriversResponse struct {
 	Body GetAllDriversBody `json:"MRData"`
 }
 
-var apiEndpoint string = "https://ergast.com/api/f1/2023"
+var apiEndpoint string = "http://ergast.com/api/f1/2023"
 
 func _getAllDrivers() GetAllDriversResponse {
 	resp, err := http.Get(apiEndpoint + "/drivers.json")
